@@ -1,0 +1,21 @@
+id: weather-data-ingestion
+namespace: hackfrost
+tasks:
+  # Fetch weather data
+  - id: fetch-weather-data
+    type: io.kestra.core.tasks.scripts.Bash
+    commands:
+      - "curl -s 'https://api.weatherapi.com/v1/current.json?key=f5ef0a1549ba405986465534240112&q=Delhi' > weather.json"
+
+  # Extract metrics and set environment variables
+  - id: set-metrics
+    type: io.kestra.core.tasks.scripts.Bash
+    commands:
+      - "export WEATHER_TEMPERATURE_CELSIUS=$(cat weather.json | jq -r '.current.temp_c')"
+      - "export WEATHER_HUMIDITY_PERCENT=$(cat weather.json | jq -r '.current.humidity')"
+
+  # Start the metrics server
+  - id: start-server
+    type: io.kestra.core.tasks.scripts.Bash
+    commands:
+      - "python3 metrics_server.py"
