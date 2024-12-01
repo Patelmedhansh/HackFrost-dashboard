@@ -1,10 +1,4 @@
 # hackfrost-dashboard
-### **1. Creating a Professional README File**
-
-Here’s the complete content for your `README.md` file to include in your GitHub repository:
-
----
-
 #### **`README.md`**
 
 ```markdown
